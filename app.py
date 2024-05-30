@@ -114,11 +114,12 @@ with selects:
     
 with maps: 
     
+    #Token 
+    token = st.secrets['map_token']
+    px.set_mapbox_access_token(token)
+
     # Se não usar o filtro de Cidade usar PLOTLY
     if city != None:
-
-        #Token 
-        #px.set_mapbox_access_token(open(".mapbox_token").read())
         
         # Criação do mapa com Plotly
         fig = px.scatter_mapbox(df,

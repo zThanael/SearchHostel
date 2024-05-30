@@ -60,6 +60,29 @@ list_comprehension = [nums.extend(np.arange(0,10)) for i in range(len(colors))]
 df_color = pd.DataFrame({'color': list_color, 'num_icon':nums})
 df_color = df_color.reset_index()
 
+# Mapeamento para o BackGround-Color
+opacidade = 0.1
+color_mapping = {
+    'red': (255, 0, 0, opacidade),
+    'blue': (0, 0, 255, opacidade),
+    'green': (0, 128, 0, opacidade),
+    'purple': (128, 0, 128, opacidade),
+    'orange': (255, 165, 0, opacidade),
+    'darkred': (139, 0, 0, opacidade),
+    'lightred': (255, 99, 71,opacidade),
+    'beige': (245, 245, 220, opacidade),
+    'darkblue': (0, 0, 139, opacidade),
+    'darkgreen': (0, 100, 0, opacidade),
+    'cadetblue': (95, 158, 160, opacidade),
+    'darkpurple': (128, 0, 128, opacidade),
+    'white': (255, 255, 255, opacidade),
+    'pink': (255, 192, 203, opacidade),
+    'lightblue': (173, 216, 230, opacidade),
+    'lightgreen': (144, 238, 144, opacidade),
+    'gray': (128, 128, 128, opacidade),
+    'black': (0, 0, 0, opacidade),
+    'lightgray': (211, 211, 211, opacidade)
+}
 
 # Header da página 
 title, button_newsletter = st.columns([0.85, 0.15], gap = "large")
@@ -170,3 +193,52 @@ with maps:
 
         # Instanciar o mapa
         events = st_folium(m,  width=800, height = 500)
+
+# Estilização
+def negrito(v):
+        return f"font-weight: bold; text_align: center"
+
+def make_clickable(val):
+    return '<a href="{}">Link</a>'.format(val)
+
+def apply_style(row):
+    styles = []
+    for val in row.index:
+        if val not in ('color','Marcador'): 
+            styles.append(f'background-color: rgba{color_mapping[row["color"]]};')
+        else:
+            styles.append(f'background-color: {row["color"]};')
+    return styles
+
+
+# Criação da Listagem
+if city != None :
+    st.title("Hostel List")
+
+    # Criar uma cópia do DataFrame
+    df_view = df.copy()
+
+    df_view.rename(columns = {
+        'name': 'Hostel',
+        'city': 'Cidade',
+        'country': 'País',
+        'qtd_rating':'Avaliações',
+        'url': 'URL',
+        'currency': 'Moeda',
+        'checkin_start': 'Início Check-In',
+        'checkin_end': 'Fim Check-In',
+    }, inplace = True)
+
+    # Criar a Tabela no HTML
+    st.markdown(f'''
+    {(df_view.style
+        .map(negrito, subset=['Hostel','Cidade','URL','Marcador','Início Check-In','Fim Check-In'])
+        .hide()
+        .apply(apply_style, axis=1, subset=['color','Hostel','Marcador','Avaliações'])
+        .hide(subset=['color'], axis = 1)
+        .set_properties(**{'text-align': 'center'}, subset=pd.IndexSlice[:, ['Marcador','Início Check-In','Fim Check-In']])
+        .set_table_styles([{'selector': 'th', 'props': [('text-align', 'center')]}])
+        .format({'Início Check-In': lambda x : f'{x:.0f}:00',  'Fim Check-In': lambda x : f'{x:.0f}:00'})
+        .format(make_clickable, subset=['URL'])
+    ).to_html()}
+    ''', unsafe_allow_html=True)

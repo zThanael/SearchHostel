@@ -119,7 +119,7 @@ with maps:
     px.set_mapbox_access_token(token)
 
     # Se não usar o filtro de Cidade usar PLOTLY
-    if city != None:
+    if city == None:
         
         # Criação do mapa com Plotly
         fig = px.scatter_mapbox(df,

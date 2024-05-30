@@ -49,7 +49,7 @@ df = get_data()
 # Criação dos marcadores que serão usados nos Mapas
 
 # Get Colors used in Folium
-colors = ['red', 'blue', 'green', 'purple', 'orange', 'darkred','beige', 'darkblue', 'darkgreen', 'cadetblue', 'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen', 'gray', 'lightgray']
+colors = ['green','lightgreen', 'blue', 'lightblue', 'cadetblue' , 'orange','purple', 'beige','darkred', 'darkblue', 'darkgreen', 'darkpurple', 'pink',  'gray', 'lightgray','red']
 
 list_color = []
 list_comprehension = [list_color.extend([color]*10) for color in colors]

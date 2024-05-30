@@ -10,8 +10,8 @@ import plotly.graph_objects as go
 import folium
 from streamlit_folium import st_folium
 
-
-string_connection = st.secrets['postgres']
+# Get the credencial - Secrets
+string_connection = st.secrets['string_connection']
 connection = create_engine(string_connection)
 
 st.write(string_connection)

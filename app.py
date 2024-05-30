@@ -215,8 +215,9 @@ def apply_style(row):
 if city != None :
     st.title("Hostel List")
 
-    # Criar uma cópia do DataFrame
-    df_view = df.copy()
+    # Renomear a coluna e filtras quais colunas mostrar
+    df.rename(columns = {'num_icon':'Marcador'}, inplace = True)
+    df_view = df[['color','Marcador','name','qtd_rating','currency','city','country','checkin_start','checkin_end','url']].sort_values(by = 'qtd_rating', ascending = False)
 
     df_view.rename(columns = {
         'name': 'Hostel',

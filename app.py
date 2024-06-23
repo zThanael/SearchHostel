@@ -11,6 +11,19 @@ import folium
 from streamlit_folium import st_folium
 
 # Ajustes no CSS
+# Remover o Header
+hide_streamlit_style = """
+            <style>
+                /* Hide the Streamlit header and menu */
+                header {visibility: hidden;}
+                /* Optionally, hide the footer */
+                .streamlit-footer {display: none;}
+                /* Hide your specific div class, replace class name with the one you identified */
+                .st-emotion-cache-uf99v8 {display: none;}
+            </style>
+            """
+
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # Remover o Espaçamento Lateral
 st.markdown('''

@@ -81,7 +81,7 @@ def get_data():
 ## Tela de Login
 
 def validate_email(email):
-    regex = re.compile(r'^[\w-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$')
+    regex = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
     return regex.match(email)
 
 def cred_entered():
@@ -93,7 +93,8 @@ def cred_entered():
 
         # Inserir na tabela de LOG
         connection = create_engine(string_connection)
-        connection.execute(f'''INSERT INTO search_hostel_acessos (email) VALUES ('{st.session_state['email'].strip()}') ''')
+        with connection.connect() as conn:
+            conn.execute(f'''INSERT INTO search_hostel_acessos (email) VALUES ('{st.session_state['email'].strip()}') ''')
         connection.dispose()
 
     else:

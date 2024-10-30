@@ -44,9 +44,8 @@ st.markdown('''
 def get_data():
 
     # Get the credencial - Secrets
-    #string_connection = st.secrets['string_connection']
-    string_connection = "postgresql+psycopg2://leitor:leitor123@personal.cxe0iuo8g20s.us-east-1.rds.amazonaws.com:5432/postgres"
-
+    string_connection = st.secrets['string_connection']
+    
     connection = create_engine(string_connection)
 
     # Create DataFrame
@@ -151,8 +150,8 @@ with selects:
 with maps: 
     
     #Token 
-    #token = st.secrets['map_token']
-    token = "pk.eyJ1IjoidGhhbmFlbCIsImEiOiJjbHdmbnFsMWwwMjh1MmtvN3k4bDlibGZrIn0.GV0-K-dJuFBuCw7HxZnmYA"
+    token = st.secrets['map_token']
+   
     px.set_mapbox_access_token(token)
 
     # Se não usar o filtro de Cidade usar PLOTLY

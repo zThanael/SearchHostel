@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import re
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 # Bibliotecas para os Mapas
 import plotly.express as px
@@ -94,7 +94,7 @@ def cred_entered():
         # Inserir na tabela de LOG
         connection = create_engine(string_connection)
         with connection.connect() as conn:
-            conn.execute(f'''INSERT INTO search_hostel_acessos (email) VALUES ('{st.session_state['email'].strip()}') ''')
+            conn.execute(text(f'''INSERT INTO search_hostel_acessos (email) VALUES ('{st.session_state['email'].strip()}') '''))
         connection.dispose()
 
     else:

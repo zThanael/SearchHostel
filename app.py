@@ -95,6 +95,7 @@ def cred_entered():
         connection = create_engine(string_connection)
         with connection.connect() as conn:
             conn.execute(text(f'''INSERT INTO search_hostel_acessos (email) VALUES ('{st.session_state['email'].strip()}') '''))
+            conn.commit()
         connection.dispose()
 
     else:
